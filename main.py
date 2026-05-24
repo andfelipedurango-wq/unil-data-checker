@@ -18,7 +18,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 2. SÉLECTEUR DYNAMIQUE DE LANGUE (Pour le bilinguisme complet)
+# 2. SÉLECTEUR DYNAMIQUE DE LANGUE
 lang = st.sidebar.radio("Language / Langue", ["FR", "EN"], index=0)
 
 st.markdown('<div class="main-title">⚖️ Data-Checker</div>', unsafe_allow_html=True)
@@ -75,7 +75,7 @@ else:
 st.write("---")
 
 # ==========================================
-# ÉTAPE 1 : VÉRIFICATION INITIALE DES DONNÉES (BILINGUE)
+# ÉTAPE 1 : VÉRIFICATION INITIALE DES DONNÉES
 # ==========================================
 if lang == "FR":
     st.markdown('<div class="section-header">Étape 1 : Vérification des données (Art. 5 LPD)</div>', unsafe_allow_html=True)
@@ -88,7 +88,7 @@ if lang == "FR":
     </div>
     """, unsafe_allow_html=True)
     e1_q = "Quelle est la nature juridique des fichiers de données ?"
-    e1_ops = ["Sélectionnez une option...", "Données pseudonymisées ou codées", "Données anonymisées", "Données personnelles brutes"]
+    e1_ops = ["Données pseudonymisées ou codées", "Données anonymisées", "Données personnelles brutes"]
 else:
     st.markdown('<div class="section-header">Step 1: Data Verification (Art. 5 FADP)</div>', unsafe_allow_html=True)
     st.markdown("""
@@ -100,18 +100,14 @@ else:
     </div>
     """, unsafe_allow_html=True)
     e1_q = "What is the legal nature of the data files?"
-    e1_ops = ["Select an option...", "Pseudonymized or coded data", "Anonymized data", "Raw personal data"]
+    e1_ops = ["Pseudonymized or coded data", "Anonymized data", "Raw personal data"]
 
-etape1_option = st.selectbox(e1_q, e1_ops)
+etape1_option = st.radio(e1_q, e1_ops, index=0)
 
 if "Données anonymisées" in etape1_option or "Anonymized data" in etape1_option:
     st.balloons()
     st.success("🟢 VERDICT : RÉUTILISATION LIBRE (Score : 100/100)" if lang == "FR" else "🟢 VERDICT: FREE REUSE (Score: 100/100)")
     st.markdown("Les données anonymes ne tombent pas sous le champ d'application de la LPD (art. 5 let. a) ni du RGPD. Réutilisation libre." if lang == "FR" else "Anonymized data does not fall under the scope of the FADP (Art. 5 let. a) nor the GDPR. Free reuse.")
-    st.stop()
-
-elif "Sélectionnez" in etape1_option or "Select" in etape1_option:
-    st.warning("Veuillez sélectionner la nature des données." if lang == "FR" else "Please select the nature of the data.")
     st.stop()
 
 else:
@@ -156,31 +152,46 @@ else:
         actions_correctives.append("❌ **Action Étape 3 :** [LPD] Défaut de couverture du consentement. Obligation d'obtenir un nouveau consentement écrit et exprès auprès des personnes concernées." if lang == "FR" else "❌ **Action Step 3:** [FADP] Lack of consent coverage. Obligation to obtain a new express, written consent from the data subjects.")
 
     # ==========================================
-    # ÉTAPE 4 : STOCKAGE ET TRANSFERT INTERNATIONAL
+    # ÉTAPE 4 : STOCKAGE ET TRANSFERT INTERNATIONAL (CORRIGÉE AVEC LISTE OPDo)
     # ==========================================
     if lang == "FR":
-        st.markdown('<div class="section-header">Étape 4 : Stockage et Transfert International</div>', unsafe_allow_html=True)
-        st.caption("Réf : art. 16 LPD ; art. 46 RGPD")
-        e4_q = "Avez-vous validé la présence de garanties suffisantes ou de Clauses Contractuelles Types (CCT) pour le stockage externe ?"
+        st.markdown('<div class="section-header">Étape 4 : Stockage et Transfert International (Art. 16 LPD)</div>', unsafe_allow_html=True)
+        st.caption("Réf : Annexe 1 OPDo (Liste révisée des États assurant une protection adéquate)")
+        e4_q = "Dans quel pays ou zone géographique vos fichiers de recherche seront-ils stockés ou hébergés ?"
+        e4_ops = [
+            "Suisse (Infrastructure locale / Serveur interne)",
+            "Zone Union Européenne / EEE (France, Allemagne, Italie, Islande, etc.)",
+            "États-Unis (Entreprise certifiée Swiss-U.S. Data Privacy Framework)",
+            "Royaume-Uni / Canada / Israël / Nouvelle-Zélande",
+            "Autre pays tiers (Chine, Inde, Russie, USA non certifié, etc.)"
+        ]
     else:
-        st.markdown('<div class="section-header">Step 4: Storage & International Transfer</div>', unsafe_allow_html=True)
-        st.caption("Ref: Art. 16 FADP; Art. 46 GDPR")
-        e4_q = "Have you validated the presence of sufficient safeguards or Standard Contractual Clauses (SCC) for external storage?"
+        st.markdown('<div class="section-header">Step 4: Storage & International Transfer (Art. 16 FADP)</div>', unsafe_allow_html=True)
+        st.caption("Ref: Annex 1 DPO (Revised list of States ensuring adequate data protection)")
+        e4_q = "In which country or geographical area will your research files be stored or hosted?"
+        e4_ops = [
+            "Switzerland (Local infrastructure / Internal server)",
+            "European Union / EEA Zone (France, Germany, Italy, Iceland, etc.)",
+            "United States (Certified under Swiss-U.S. Data Privacy Framework)",
+            "United Kingdom / Canada / Israel / New Zealand",
+            "Other third country (China, India, Russia, non-certified USA, etc.)"
+        ]
         
-    etape4_choice = st.radio(e4_q, yes_no, index=0, key="r_e4")
+    etape4_location = st.selectbox(e4_q, e4_ops, index=0)
     
-    if etape4_choice in ["Non", "No"]:
+    # Si l'utilisateur choisit un pays hors liste d'adéquation de l'OPDo
+    if "Autre pays tiers" in etape4_location or "Other third country" in etape4_location:
         score -= 25
         if is_unil:
             if lang == "FR":
-                actions_correctives.append("❌ **Action Étape 4 : [Directive UNIL 4.5 & Art. 4 OPDo]** Risque de transfert international illicite. Vous devez impérativement rapatrier et stocker vos fichiers sur l'infrastructure de stockage sécurisée de l'UNIL (**serveur NAS de l'Amphimax**), gérée par le Centre Informatique (Ci-UNIL), garantissant la localisation des données en Suisse.")
+                actions_correctives.append("❌ **Action Étape 4 : [Directive UNIL 4.5 & Art. 4 OPDo]** Hébergement dans un État au niveau de protection insuffisant. Vous devez impérativement rapatrier et stocker vos fichiers sur l'infrastructure sécurisée de l'UNIL (**serveur NAS de l'Amphimax**), gérée par le Ci-UNIL, garantissant la localisation des données en Suisse.")
             else:
-                actions_correctives.append("❌ **Action Step 4: [UNIL Directive 4.5 & Art. 4 DPO]** Risk of unlawful international transfer. You must repatriate and store your files on the secure centralized storage infrastructure of UNIL (**Amphimax NAS server**), managed by Ci-UNIL, guaranteeing data localization in Switzerland.")
+                actions_correctives.append("❌ **Action Step 4: [UNIL Directive 4.5 & Art. 4 DPO]** Hosting in a State with an insufficient level of protection. You must repatriate and store your files on the secure infrastructure of UNIL (**Amphimax NAS server**), managed by Ci-UNIL, guaranteeing data localization in Switzerland.")
         else:
             if lang == "FR":
-                actions_correctives.append("❌ **Action Étape 4 :** [LPD] Risque de transfert transfrontalier sans base légale. Obligation d'activer des Clauses Contractuelles Types (CCT) approuvées par le PFPDT ou d'utiliser un hébergement suisse souverain sécurisé (art. 4 OPDo).")
+                actions_correctives.append("❌ **Action Étape 4 :** [LPD] Le pays choisi n'offre pas de protection adéquate (Annexe 1 OPDo). Vous devez obligatoirement mettre en place des Clauses Contractuelles Types (CCT) approuvées par le PFPDT et exiger un chiffrement fort géré par le responsable suisse.")
             else:
-                actions_correctives.append("❌ **Action Step 4:** [FADP] Risk of cross-border transfer without a legal basis. Obligation to activate Standard Contractual Clauses (SCC) approved by the FDPIC or to use a secure sovereign Swiss hosting provider (Art. 4 DPO).")
+                actions_correctives.append("❌ **Action Step 4:** [FADP] The selected country does not offer adequate protection (Annex 1 DPO). You must implement Standard Contractual Clauses (SCC) approved by the FDPIC and mandate strong client-side encryption.")
 
     # Application de la Directive UNIL 4.1
     if is_unil:
@@ -199,7 +210,7 @@ else:
             actions_correctives.append("❌ **Gouvernance : [Directive UNIL 4.1]** Manquement de gouvernance contractuelle. Toute sous-traitance de données de recherche requiert la signature d'une convention de traitement standardisée validée par le **Service juridique de l'UNIL** avant le début des opérations informatiques." if lang == "FR" else "❌ **Governance: [UNIL Directive 4.1]** Contractual governance breach. Any outsourcing of research data processing requires the signature of a standardized processing agreement validated by the **UNIL Legal Service** before computing operations begin.")
 
     # ==========================================
-    # ÉTAPE 5 : SENSIBILITÉ DES DONNÉES (BILINGUE)
+    # ÉTAPE 5 : SENSIBILITÉ DES DONNÉES
     # ==========================================
     if lang == "FR":
         st.markdown('<div class="section-header">Étape 5 : Sensibilité des données (Art. 5 let. c LPD)</div>', unsafe_allow_html=True)
