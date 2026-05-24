@@ -29,22 +29,36 @@ else:
 st.write("---")
 
 # ==========================================
-# MODULE INITIAL : VERROU DE COMPÉTENCE (ART. 2 LRH)
+# MODULE INITIAL : VERROU DE COMPÉTENCE (ART. 2 LRH - TEXTE STRICT CORRIGÉ)
 # ==========================================
 if lang == "FR":
     st.markdown('<div class="section-header">📋 Évaluation de compétence (Art. 2 LRH)</div>', unsafe_allow_html=True)
-    st.markdown('<div class="legal-text"><b>Art. 2 Champ d’application (LRH) :</b> La présente loi s’applique à la recherche sur les maladies humaines et sur la structure et le fonctionnement du corps humain.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="legal-text"><b>Art. 2 Champ d’application (LRH) :</b> La présente loi s’apply à la recherche sur les maladies humaines et sur la structure et le fonctionnement du corps humain.</div>', unsafe_allow_html=True)
     lrh_q = "Votre recherche est-elle pratiquée sur l'un des éléments suivants (Art. 2 al. 1 LRH) ?"
-    lrh_ops = ["a. Sur des personnes", "b. Sur des personnes décédées", "c. Sur des embryons et des fœtus", "d. Sur du matériel biologique non anonymisé", "e. Sur des données personnelles liées à la santé non anonymisées", "Aucun de ces éléments (Art. 2 al. 2 / Données anonymes)"]
+    lrh_ops = [
+        "a. Sur des personnes", 
+        "b. Sur des personnes décédées", 
+        "c. Sur des embryons et des fœtus", 
+        "d. Sur du matériel biologique", 
+        "e. Sur des données personnelles liées à la santé", 
+        "Aucun (Art. 2 al. 2 : matériel anonymisé / données collectées anonymement ou anonymisées)"
+    ]
 else:
     st.markdown('<div class="section-header">📋 Competence Assessment (Art. 2 HRA)</div>', unsafe_allow_html=True)
     st.markdown('<div class="legal-text"><b>Art. 2 Scope of application (HRA):</b> This Act applies to research on human diseases and on the structure and function of the human body.</div>', unsafe_allow_html=True)
     lrh_q = "Is your research conducted on any of the following elements (Art. 2 al. 1 HRA)?"
-    lrh_ops = ["a. On persons", "b. On deceased persons", "c. On embryos and fetuses", "d. On non-anonymized biological material", "e. On non-anonymized health-related personal data", "None of these elements (Art. 2 al. 2 / Anonymized data)"]
+    lrh_ops = [
+        "a. On persons", 
+        "b. On deceased persons", 
+        "c. On embryos and fetuses", 
+        "d. On biological material", 
+        "e. On personal data health-related", 
+        "None (Art. 2 al. 2: anonymized material / data collected anonymously or anonymized)"
+    ]
 
 lrh_selection = st.radio(lrh_q, lrh_ops, index=5)
 
-if "Aucun de ces éléments" not in lrh_selection and "None of these elements" not in lrh_selection:
+if "Aucun" not in lrh_selection and "None" not in lrh_selection:
     if lang == "FR":
         st.error("🛑 VERROU ALGORITHMIQUE — APPLICATION DE LA LRH (LEX SPECIALIS)")
         st.markdown("En vertu de l'art. 2 al. 1 LRH, votre projet entre dans le champ d'application de la recherche humaine. Ce projet sort du cadre d'évaluation de cet outil général. Vous devez obligatoirement saisir la **CER-VD** (art. 51 al. 1 LRH).")
@@ -152,7 +166,7 @@ else:
         actions_correctives.append("❌ **Action Étape 3 :** [LPD] Défaut de couverture du consentement. Obligation d'obtenir un nouveau consentement écrit et exprès auprès des personnes concernées." if lang == "FR" else "❌ **Action Step 3:** [FADP] Lack of consent coverage. Obligation to obtain a new express, written consent from the data subjects.")
 
     # ==========================================
-    # ÉTAPE 4 : STOCKAGE ET TRANSFERT INTERNATIONAL (CORRIGÉE AVEC LISTE OPDo)
+    # ÉTAPE 4 : STOCKAGE ET TRANSFERT INTERNATIONAL (AVEC LISTE OPDo RECONNAISSANCE)
     # ==========================================
     if lang == "FR":
         st.markdown('<div class="section-header">Étape 4 : Stockage et Transfert International (Art. 16 LPD)</div>', unsafe_allow_html=True)
@@ -179,7 +193,6 @@ else:
         
     etape4_location = st.selectbox(e4_q, e4_ops, index=0)
     
-    # Si l'utilisateur choisit un pays hors liste d'adéquation de l'OPDo
     if "Autre pays tiers" in etape4_location or "Other third country" in etape4_location:
         score -= 25
         if is_unil:
