@@ -227,7 +227,7 @@ else:
     # ==========================================
     if lang == "FR":
         st.markdown('<div class="section-header">Étape 5 : Sensibilité des données (Art. 5 let. c LPD)</div>', unsafe_allow_html=True)
-        st.caption("Réf : art. 5 let. c LPD"; art. 9 al. 2 let. j et art. 89 RGPD")
+        st.caption("Réf : art. 5 let. c LPD; art. 9 al. 2 let. j et art. 89 RGPD")
         st.markdown("""
         <div style="background-color: #f1f5f9; padding: 12px; border-radius: 6px; margin-bottom: 15px;">
         <b>Rappel légal — Sont considérées comme données sensibles les données portant sur :</b><br>
