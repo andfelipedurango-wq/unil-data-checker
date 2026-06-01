@@ -41,7 +41,7 @@ if lang == "FR":
         "c. Sur des embryons et des fœtus", 
         "d. Sur du matériel biologique", 
         "e. Sur des données personnelles liées à la santé", 
-        "Aucun (Art. 2 al. 2 : matériel anonymisé / données collectées anonymement ou anonymisées)"
+        "Aucun (Projet non médical/biologique OU données de santé totalement anonymisées)"
     ]
 else:
     st.markdown('<div class="section-header">📋 Competence Assessment (Art. 2 HRA)</div>', unsafe_allow_html=True)
