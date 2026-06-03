@@ -53,7 +53,7 @@ else:
         "c. On embryos and fetuses", 
         "d. On biological material", 
         "e. On personal data health-related", 
-        "None (Art. 2 al. 2: anonymized material / data collected anonymously or anonymized)"
+        "None (Non-medical/biological project OR fully anonymized health data)"
     ]
 
 lrh_selection = st.radio(lrh_q, lrh_ops, index=5)
