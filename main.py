@@ -33,7 +33,7 @@ st.write("---")
 # ==========================================
 if lang == "FR":
     st.markdown('<div class="section-header">📋 Évaluation de compétence (Art. 2 LRH)</div>', unsafe_allow_html=True)
-    st.markdown('<div class="legal-text"><b>Art. 2 Champ d’application (LRH) :</b> La présente loi s’apply à la recherche sur les maladies humaines et sur la structure et le fonctionnement du corps humain.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="legal-text"><b>Art. 2 Champ d’application (LRH) :</b> La présente loi s’applique à la recherche sur les maladies humaines et sur la structure et le fonctionnement du corps humain.</div>', unsafe_allow_html=True)
     lrh_q = "Votre recherche est-elle pratiquée sur l'un des éléments suivants (Art. 2 al. 1 LRH) ?"
     lrh_ops = [
         "a. Sur des personnes", 
@@ -41,7 +41,7 @@ if lang == "FR":
         "c. Sur des embryons et des fœtus", 
         "d. Sur du matériel biologique", 
         "e. Sur des données personnelles liées à la santé", 
-        "Aucun (Projet non médical/biologique OU données de santé totalement anonymisées)"
+        "Aucun (Projet hors domaine médical/biologique OU données de recherche médicale anonymisées)"
     ]
 else:
     st.markdown('<div class="section-header">📋 Competence Assessment (Art. 2 HRA)</div>', unsafe_allow_html=True)
@@ -53,7 +53,7 @@ else:
         "c. On embryos and fetuses", 
         "d. On biological material", 
         "e. On personal data health-related", 
-        "None (Non-medical/biological project OR fully anonymized health data)"
+        "None (Project outside medical/biological field OR anonymized medical research data)"
     ]
 
 lrh_selection = st.radio(lrh_q, lrh_ops, index=5)
@@ -97,7 +97,7 @@ if lang == "FR":
     <div style="background-color: #f1f5f9; padding: 12px; border-radius: 6px; margin-bottom: 15px;">
     <b>Guide de qualification juridique des données :</b><br>
     • <b>Données personnelles brutes :</b> Informations permettant d'identifier directement une personne (ex: nom, e-mail).<br>
-    • <b>Données pseudonymisées / codées :</b> Les identifiants directs sont remplacés par un code. Elles restent des données personnelles car la clé de décodage permet la ré-identification.<br>
+    • <b>Données pseudonymisées / codées :</b> Les identifiants directs sont remplacés by un code. Elles restent des données personnelles car la clé de décodage permet la ré-identification.<br>
     • <b>Données anonymisées :</b> Processus irréversible rendant l'identification impossible. Hors champ LPD (réutilisation libre).
     </div>
     """, unsafe_allow_html=True)
@@ -227,7 +227,7 @@ else:
     # ==========================================
     if lang == "FR":
         st.markdown('<div class="section-header">Étape 5 : Sensibilité des données (Art. 5 let. c LPD)</div>', unsafe_allow_html=True)
-        st.caption("Réf : art. 5 let. c LPD; art. 9 al. 2 let. j et art. 89 RGPD")
+        st.caption("Réf : art. 5 let. c LPD ; art. 9 al. 2 let. j et art. 89 RGPD")
         st.markdown("""
         <div style="background-color: #f1f5f9; padding: 12px; border-radius: 6px; margin-bottom: 15px;">
         <b>Rappel légal — Sont considérées comme données sensibles les données portant sur :</b><br>
@@ -240,7 +240,7 @@ else:
         e5_q = "Vos fichiers contiennent-ils au moins une de ces catégories particulières de données ?"
     else:
         st.markdown('<div class="section-header">Step 5: Data Sensitivity (Art. 5 let. c FADP)</div>', unsafe_allow_html=True)
-        st.caption("Ref: Art. 5 let. c FADP")
+        st.caption("Ref: Art. 5 let. c FADP ; Art. 9 al. 2 let. j and Art. 89 GDPR")
         st.markdown("""
         <div style="background-color: #f1f5f9; padding: 12px; border-radius: 6px; margin-bottom: 15px;">
         <b>Legal Reminder — Sensitive personal data includes data relating to:</b><br>
