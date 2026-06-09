@@ -97,7 +97,7 @@ if lang == "FR":
     <div style="background-color: #f1f5f9; padding: 12px; border-radius: 6px; margin-bottom: 15px;">
     <b>Guide de qualification juridique des données :</b><br>
     • <b>Données personnelles brutes :</b> Informations permettant d'identifier directement une personne (ex: nom, e-mail).<br>
-    • <b>Données pseudonymisées / codées :</b> Les identifiants directs sont remplacés by un code. Elles restent des données personnelles car la clé de décodage permet la ré-identification.<br>
+    • <b>Données pseudonymisées / codées :</b> Les identifiants directs sont remplacés par un code. Elles restent des données personnelles car la clé de décodage permet la ré-identification.<br>
     • <b>Données anonymisées :</b> Processus irréversible rendant l'identification impossible. Hors champ LPD (réutilisation libre).
     </div>
     """, unsafe_allow_html=True)
@@ -163,7 +163,7 @@ else:
     
     if etape3_choice in ["Non", "No"]:
         score -= 25
-        actions_correctives.append("❌ **Action Étape 3 :** [LPD] Défaut de couverture du consentement. Obligation d'obtenir un nouveau consentement écrit et exprès auprès des personnes concernées." if lang == "FR" else "❌ **Action Step 3:** [FADP] Lack of consent coverage. Obligation to obtain a new express, written consent from the data subjects.")
+        actions_correctives.append("❌ **Action Étape 3 :** [LPD / LPrD] Défaut de couverture du consentement. Obligation d'obtenir un nouveau consentement écrit et exprès auprès des personnes concernées." if lang == "FR" else "❌ **Action Step 3:** [FADP / LPrD] Lack of consent coverage. Obligation to obtain a new express, written consent from the data subjects.")
 
     # ==========================================
     # ÉTAPE 4 : STOCKAGE ET TRANSFERT INTERNATIONAL (AVEC LISTE OPDo RECONNAISSANCE)
@@ -223,7 +223,7 @@ else:
             actions_correctives.append("❌ **Gouvernance : [Directive UNIL 4.1]** Manquement de gouvernance contractuelle. Toute sous-traitance de données de recherche requiert la signature d'une convention de traitement standardisée validée par le **Service juridique de l'UNIL** avant le début des opérations informatiques." if lang == "FR" else "❌ **Governance: [UNIL Directive 4.1]** Contractual governance breach. Any outsourcing of research data processing requires the signature of a standardized processing agreement validated by the **UNIL Legal Service** before computing operations begin.")
 
     # ==========================================
-    # ÉTAPE 5 : SENSIBILITÉ DES DONNÉES
+    # ÉTAPE 5 : SENSIBILITÉ DES DONNÉES (AVEC LOGIQUE ADAPTATIVE DYNAMIQUE)
     # ==========================================
     if lang == "FR":
         st.markdown('<div class="section-header">Étape 5 : Sensibilité des données (Art. 5 let. c LPD)</div>', unsafe_allow_html=True)
@@ -286,23 +286,27 @@ else:
             st.error("🟥 RISQUE MAJEUR DE NON-CONFORMITÉ" if lang == "FR" else "🟥 HIGH NON-COMPLIANCE RISK")
             st.write("Le score est insuffisant. Le traitement informatique doit être suspendu jusqu'à correction." if lang == "FR" else "The compliance score is insufficient. Data processing must be suspended until remediated.")
         
-        # Régime de Protection Renforcée (Données sensibles)
+        # Régime de Protection Renforcée Dynamique (Bases Légales Internes vs Externes)
         if etape5_sensitive:
             if lang == "FR":
                 st.info("🔵 RÉGIME DE PROTECTION RENFORCÉE (Art. 5 let. c LPD)")
-                st.markdown("""
-                **Mesures techniques de sécurité obligatoires :**
-                * **Chiffrement fort obligatoire** de vos fichiers (AES-256) au repos et en transit (TLS 1.3) (art. 4 OPDo).
-                * **Journalisation stricte et automatisée** de toutes les opérations d'accès (art. 4 al. 4 OPDo).
-                * **Obligation réglementaire** de réaliser une Analyse d'Impact relative à la Protection des Données (AIPD) selon l'art. 22 LPD.
+                base_secu = "Art. 10a LPrD / Directives UNIL" if is_unil else "Art. 8 LPD / Art. 3 al. 2 OPDo"
+                log_rule = "Art. 10a LPrD pour l'UNIL" if is_unil else "Art. 4 OPDo pour les externes si traitement à grande échelle"
+                st.markdown(f"""
+                **Mesures techniques de sécurité obligatoires ({base_secu}) :**
+                * **Chiffrement fort obligatoire** de vos fichiers (AES-256) au repos et en transit (TLS 1.3).
+                * **Journalisation stricte et automatisée** des accès ({log_rule}).
+                * **Obligation réglementaire** de réaliser une Analyse d'Impact relative à la Protection des Données (AIPD) selon l'art. 22 LPD (ou art. 11 LPrD).
                 """)
             else:
                 st.info("🔵 ENHANCED PROTECTION REGIME (Art. 5 let. c FADP)")
-                st.markdown("""
-                **Mandatory technical safeguards:**
-                * **Mandatory strong encryption** of data files at rest (AES-256) and in transit (TLS 1.3) (Art. 4 DPO).
-                * **Strict, automated logging** of all access and data modification operations (Art. 4 al. 4 DPO).
-                * **Compulsory performance** of a Data Protection Impact Assessment (DPIA) according to Art. 22 FADP.
+                base_secu = "Art. 10a LPrD / UNIL Directives" if is_unil else "Art. 8 FADP / Art. 3 al. 2 DPO"
+                log_rule = "Art. 10a LPrD for UNIL" if is_unil else "Art. 4 DPO for externals if large-scale processing"
+                st.markdown(f"""
+                **Mandatory technical safeguards ({base_secu}):**
+                * **Mandatory strong encryption** of data files at rest (AES-256) and in transit (TLS 1.3).
+                * **Strict, automated logging** of access operations ({log_rule}).
+                * **Compulsory performance** of a Data Protection Impact Assessment (DPIA) according to Art. 22 FADP (or Art. 11 LPrD).
                 """)
             
         # Liste finale des actions de régularisation
