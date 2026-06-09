@@ -29,7 +29,7 @@ else:
 st.write("---")
 
 # ==========================================
-# MODULE INITIAL : VERROU DE COMPÉTENCE (ART. 2 LRH - TEXTE STRICT CORRIGÉ)
+# MODULE INITIAL : VERROU DE COMPÉTENCE (ART. 2 LRH)
 # ==========================================
 if lang == "FR":
     st.markdown('<div class="section-header">📋 Évaluation de compétence (Art. 2 LRH)</div>', unsafe_allow_html=True)
@@ -89,7 +89,7 @@ else:
 st.write("---")
 
 # ==========================================
-# ÉTAPE 1 : VÉRIFICATION INITIALE DES DONNÉES
+# ÉTAPE 1 : VÉRIFICATION DES DONNÉES (ART. 5 LPD)
 # ==========================================
 if lang == "FR":
     st.markdown('<div class="section-header">Étape 1 : Vérification des données (Art. 5 LPD)</div>', unsafe_allow_html=True)
@@ -148,7 +148,7 @@ else:
         actions_correctives.append("❌ **Action Étape 2 :** [LPD] Rupture du principe de finalité. Nouveau consentement requis ou mise à jour immédiate du cadre d'accord des participants." if lang == "FR" else "❌ **Action Step 2:** [FADP] Breach of the purpose limitation principle. New consent required or immediate update of the participants' agreement framework.")
 
     # ==========================================
-    # ÉTAPE 3 : COUVERTURE DU CONSENTEMENT
+    # ÉTAPE 3 : COUVERTURE DU CONSENTEMENT INITIAL
     # ==========================================
     if lang == "FR":
         st.markdown('<div class="section-header">Étape 3 : Couverture du consentement initial</div>', unsafe_allow_html=True)
@@ -166,7 +166,7 @@ else:
         actions_correctives.append("❌ **Action Étape 3 :** [LPD / LPrD] Défaut de couverture du consentement. Obligation d'obtenir un nouveau consentement écrit et exprès auprès des personnes concernées." if lang == "FR" else "❌ **Action Step 3:** [FADP / LPrD] Lack of consent coverage. Obligation to obtain a new express, written consent from the data subjects.")
 
     # ==========================================
-    # ÉTAPE 4 : STOCKAGE ET TRANSFERT INTERNATIONAL (AVEC LISTE OPDo RECONNAISSANCE)
+    # ÉTAPE 4 : STOCKAGE ET TRANSFERT INTERNATIONAL
     # ==========================================
     if lang == "FR":
         st.markdown('<div class="section-header">Étape 4 : Stockage et Transfert International (Art. 16 LPD)</div>', unsafe_allow_html=True)
@@ -202,9 +202,9 @@ else:
                 actions_correctives.append("❌ **Action Step 4: [UNIL Directive 4.5 & Art. 4 DPO]** Hosting in a State with an insufficient level of protection. You must repatriate and store your files on the secure infrastructure of UNIL (**Amphimax NAS server**), managed by Ci-UNIL, guaranteeing data localization in Switzerland.")
         else:
             if lang == "FR":
-                actions_correctives.append("❌ **Action Étape 4 :** [LPD] Le pays choisi n'offre pas de protection adéquate (Annexe 1 OPDo). Vous devez obligatoirement mettre en place des Clauses Contractuelles Types (CCT) approuvées par le PFPDT et exiger un chiffrement fort géré par le responsable suisse.")
+                actions_correctives.append("❌ **Action Étape 4 : [Art. 16 al. 2 LPD]** Le pays choisi n'offre pas de protection adéquate (Annexe 1 OPDo). Pour un chercheur externe, vous devez obligatoirement mettre en place une garantie contractuelle validée : soit des **Clauses Contractuelles Types (CCT - let. d)**, soit un **Contrat de protection des données notifié (let. b)**, soit des **Règles d'entreprise contraignantes (BCR - let. e)** en cas de transfert intra-groupe, assorti d'un chiffrement fort géré par le responsable suisse.")
             else:
-                actions_correctives.append("❌ **Action Step 4:** [FADP] The selected country does not offer adequate protection (Annex 1 DPO). You must implement Standard Contractual Clauses (SCC) approved by the FDPIC and mandate strong client-side encryption.")
+                actions_correctives.append("❌ **Action Step 4: [Art. 16 al. 2 FADP]** The selected country does not offer adequate protection (Annex 1 DPO). For an external researcher, you must implement an approved contractual safeguard: either **Standard Contractual Clauses (SCC - let. d)**, a **Notified Data Protection Contract (let. b)**, or **Binding Corporate Rules (BCR - let. e)** for intra-group transfers, combined with strong client-side encryption.")
 
     # Application de la Directive UNIL 4.1
     if is_unil:
@@ -223,7 +223,7 @@ else:
             actions_correctives.append("❌ **Gouvernance : [Directive UNIL 4.1]** Manquement de gouvernance contractuelle. Toute sous-traitance de données de recherche requiert la signature d'une convention de traitement standardisée validée par le **Service juridique de l'UNIL** avant le début des opérations informatiques." if lang == "FR" else "❌ **Governance: [UNIL Directive 4.1]** Contractual governance breach. Any outsourcing of research data processing requires the signature of a standardized processing agreement validated by the **UNIL Legal Service** before computing operations begin.")
 
     # ==========================================
-    # ÉTAPE 5 : SENSIBILITÉ DES DONNÉES (AVEC LOGIQUE ADAPTATIVE DYNAMIQUE)
+    # ÉTAPE 5 : SENSIBILITÉ DES DONNÉES
     # ==========================================
     if lang == "FR":
         st.markdown('<div class="section-header">Étape 5 : Sensibilité des données (Art. 5 let. c LPD)</div>', unsafe_allow_html=True)
